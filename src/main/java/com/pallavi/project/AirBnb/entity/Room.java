@@ -8,6 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -32,6 +33,15 @@ public class Room {
 
     @Column(columnDefinition = "TEXT[]")
     private String[] amenities;
+//    @ElementCollection
+//    @CollectionTable(name = "room_amenities")
+//    @Column(name = "amenity")
+//    private List<String> amenities;
+//
+//    @ElementCollection
+//    @CollectionTable(name = "room_photos")
+//    @Column(name = "photo")
+//    private List<String> photos;
 
     @Column(nullable = false)
     private Integer totalCount;

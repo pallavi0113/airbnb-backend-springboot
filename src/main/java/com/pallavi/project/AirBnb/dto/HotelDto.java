@@ -1,12 +1,8 @@
 package com.pallavi.project.AirBnb.dto;
 
-import com.pallavi.project.AirBnb.entity.HotelContactInfo;
-import jakarta.persistence.*;
-import lombok.Data;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
-import java.time.LocalDateTime;
+import com.pallavi.project.AirBnb.entity.HotelContactInfo;
+import lombok.Data;
 
 @Data
 public class HotelDto {

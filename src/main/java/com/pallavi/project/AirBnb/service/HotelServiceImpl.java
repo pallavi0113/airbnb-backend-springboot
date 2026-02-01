@@ -2,8 +2,10 @@ package com.pallavi.project.AirBnb.service;
 
 import com.pallavi.project.AirBnb.dto.HotelDto;
 import com.pallavi.project.AirBnb.entity.Hotel;
+import com.pallavi.project.AirBnb.entity.Room;
 import com.pallavi.project.AirBnb.exception.ResourceNotFoundException;
 import com.pallavi.project.AirBnb.repository.HotelRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class HotelServiceImpl implements HotelService{
     private final HotelRepository hotelRepository;
+    private final InventoryService inventoryService;
     private final ModelMapper modelMapper;
 
     @Override
@@ -35,4 +38,50 @@ public class HotelServiceImpl implements HotelService{
 
         return modelMapper.map(hotel,HotelDto.class);
     }
+
+    @Override
+    public HotelDto updateHotelById(Long id, HotelDto hotelDto) {
+        log.info("Update the hotel with Id: {}", id);
+        Hotel hotel=hotelRepository
+                .findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Hotel not found with id: " +id));
+        modelMapper.map(hotelDto,hotel);
+        hotel.setId(id);
+        hotel = hotelRepository.save(hotel);
+        return modelMapper.map(hotel, HotelDto.class);
+    }
+
+    @Override
+    @Transactional
+    public void deleteHotelById(Long id) {
+//        boolean exists= hotelRepository.existsById(id);
+//        if(!exists) throw  new ResourceNotFoundException("Hotel not found with id: " +id);
+//        hotelRepository.deleteById(id);
+        //TODO: delete the future inventories for this hotel
+        Hotel hotel=hotelRepository
+                .findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Hotel not found with ID: " +id));
+        hotelRepository.deleteById(id);
+        for(Room room: hotel.getRooms()){
+            inventoryService.deleteFutureInventories(room);
+        }
+    }
+
+    @Override
+    @Transactional
+    public void activateHotel(Long hotelId) {
+        log.info("Activating the hotel with Id: {}", hotelId);
+        Hotel hotel=hotelRepository
+                .findById(hotelId)
+                .orElseThrow(() -> new ResourceNotFoundException("Hotel not found with id: " +hotelId));
+
+        hotel.setActive(true);
+        //TODO: Create inventory for all the rooms for this hotel
+        //assuming only do it once
+        for(Room room: hotel.getRooms()){
+            inventoryService.initializeRoomForAYear(room);
+        }
+    }
+
+
 }
