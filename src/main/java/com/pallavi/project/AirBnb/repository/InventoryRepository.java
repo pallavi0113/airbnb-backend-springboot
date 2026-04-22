@@ -16,6 +16,7 @@ import java.util.List;
 
 public interface InventoryRepository extends JpaRepository<Inventory, Long> {
     void deleteByRoom(Room room);
+    List<Inventory> findByHotelAndDateBetween(Hotel hotel, LocalDate startDate, LocalDate endDate);
     @Query("""
         SELECT i.hotel
         FROM Inventory i

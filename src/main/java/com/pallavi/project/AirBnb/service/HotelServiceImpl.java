@@ -36,13 +36,19 @@ public class HotelServiceImpl implements HotelService{
     }
 
     @Override
-    public HotelDto getHotelById(Long id) {
+    public HotelInfoDto getHotelById(Long id) {
         log.info("Getting the hotel with Id: {}", id);
         Hotel hotel=hotelRepository
                 .findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Hotel not found with id: " +id));
 
-        return modelMapper.map(hotel,HotelDto.class);
+        List<Room> rooms = roomRepository.findByHotelId(id);
+        List<RoomDto> roomDtos = rooms
+                .stream()
+                .map((element) -> modelMapper.map(element, RoomDto.class))
+                .toList();
+
+        return new HotelInfoDto(modelMapper.map(hotel, HotelDto.class), roomDtos);
     }
 
     @Override

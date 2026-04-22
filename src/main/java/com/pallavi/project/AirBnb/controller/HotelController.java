@@ -1,6 +1,7 @@
 package com.pallavi.project.AirBnb.controller;
 
 import com.pallavi.project.AirBnb.dto.HotelDto;
+import com.pallavi.project.AirBnb.dto.HotelInfoDto;
 import com.pallavi.project.AirBnb.service.HotelService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,9 +24,9 @@ public class HotelController {
     }
 
     @GetMapping("/{hotelId}")
-    public ResponseEntity<HotelDto> getHotelById(@PathVariable Long hotelId){
-        HotelDto hotelDto=hotelService.getHotelById(hotelId);
-        return ResponseEntity.ok(hotelDto);
+    public ResponseEntity<HotelInfoDto> getHotelById(@PathVariable Long hotelId){
+        HotelInfoDto hotelInfoDto=hotelService.getHotelById(hotelId);
+        return ResponseEntity.ok(hotelInfoDto);
     }
 
     @PutMapping("/{hotelId}")

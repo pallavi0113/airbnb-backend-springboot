@@ -1,10 +1,10 @@
 package com.pallavi.project.AirBnb.service;
 
-import com.pallavi.project.AirBnb.dto.HotelDto;
+import com.pallavi.project.AirBnb.dto.HotelPriceDto;
 import com.pallavi.project.AirBnb.dto.HotelSearchRequest;
-import com.pallavi.project.AirBnb.entity.Hotel;
 import com.pallavi.project.AirBnb.entity.Inventory;
 import com.pallavi.project.AirBnb.entity.Room;
+import com.pallavi.project.AirBnb.repository.HotelMinPriceRepository;
 import com.pallavi.project.AirBnb.repository.InventoryRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,18 +18,22 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class InventoryServiceImpl implements InventoryService {
+public class InventoryServiceImpl implements InventoryService{
     private final ModelMapper modelMapper;
+
     private final InventoryRepository inventoryRepository;
+    private final HotelMinPriceRepository hotelMinPriceRepository;
+
     @Override
     public void initializeRoomForAYear(Room room) {
-        LocalDate today =LocalDate.now();
-        LocalDate endDate=today.plusYears(1);
-        for(; !today.isAfter(endDate); today=today.plusDays(1)){
-            Inventory inventory=Inventory.builder()
+        LocalDate today = LocalDate.now();
+        LocalDate endDate = today.plusYears(1);
+        for (; !today.isAfter(endDate); today=today.plusDays(1)) {
+            Inventory inventory = Inventory.builder()
                     .hotel(room.getHotel())
                     .room(room)
                     .bookedCount(0)
@@ -43,28 +47,37 @@ public class InventoryServiceImpl implements InventoryService {
                     .build();
             inventoryRepository.save(inventory);
         }
-
     }
 
     @Override
     public void deleteAllInventories(Room room) {
-        LocalDate today = LocalDate.now();
+        log.info("Deleting the inventories of room with id: {}", room.getId());
         inventoryRepository.deleteByRoom(room);
     }
 
     @Override
-    public Page<HotelDto> searchHotels(HotelSearchRequest hotelSearchRequest) {
-        log.info("Searching hotels for {} city, from {} to {}", hotelSearchRequest.getCity(),hotelSearchRequest.getStartDate(),hotelSearchRequest.getEndDate());
+    public Page<HotelPriceDto> searchHotels(HotelSearchRequest hotelSearchRequest) {
+        log.info("Searching hotels for {} city, from {} to {}", hotelSearchRequest.getCity(), hotelSearchRequest.getStartDate(), hotelSearchRequest.getEndDate());
+//        if (hotelSearchRequest.getStartDate().isBefore(LocalDate.now())) {
+//            return Page.empty();
+//        }
+        if (hotelSearchRequest.getStartDate().isBefore(LocalDate.now())) {
+            // Sirf empty return mat karo, Exception throw karo
+            throw new RuntimeException("Check-in date cannot be in the past!");
+        }
+        if (hotelSearchRequest.getStartDate().isAfter(hotelSearchRequest.getEndDate())) {
+            throw new RuntimeException("Check-in date cannot be after Check-out date!");
+        }
         Pageable pageable = PageRequest.of(hotelSearchRequest.getPage(), hotelSearchRequest.getSize());
-        long dateCount=
-                ChronoUnit.DAYS.between(hotelSearchRequest.getStartDate(),hotelSearchRequest.getEndDate())+1;
+        long dateCount =
+                ChronoUnit.DAYS.between(hotelSearchRequest.getStartDate(), hotelSearchRequest.getEndDate()) + 1;
 
-        Page<Hotel> hotelPage = inventoryRepository.findHotelsWithAvailableInventory(hotelSearchRequest.getCity(),
-                hotelSearchRequest.getStartDate(), hotelSearchRequest.getEndDate(), hotelSearchRequest.getRoomsCount(),
-                dateCount, pageable);
+        // business logic - 90 days
+        Page<HotelPriceDto> hotelPage =
+                hotelMinPriceRepository.findHotelsWithAvailableInventory(hotelSearchRequest.getCity(),
+                        hotelSearchRequest.getStartDate(), hotelSearchRequest.getEndDate(), hotelSearchRequest.getRoomsCount(),
+                        dateCount, pageable);
 
-        return hotelPage.map((element) -> modelMapper.map(element, HotelDto.class));
-
-
+        return hotelPage;
     }
 }
