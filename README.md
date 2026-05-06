@@ -88,3 +88,22 @@ src/main/java/com.pallavi.project.AirBnb
 - **Service** → Business logic layer  
 - **Strategy** → Strategy pattern implementations  
 - **Util** → Utility/helper classes
+
+---
+
+## 🔐 Authentication Flow
+
+```text
+User Login
+   ↓
+JWT Token Generated
+   ↓
+Token Sent in Authorization Header
+   ↓
+Protected APIs Accessible
+```
+
+- User logs in using email & password  
+- Server validates credentials  
+- JWT token is generated  
+- Token is used to access secured APIs
