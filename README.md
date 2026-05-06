@@ -52,3 +52,9 @@ A scalable backend application inspired by Airbnb, built using Spring Boot.
 - Exception Handling
 - DTO Mapping
 - Database Relationships
+
+---
+
+## 📷 Swagger API Documentation
+<img width="1763" height="4567" alt="Swagger-api" src="https://github.com/user-attachments/assets/9341568c-c8e7-486c-a867-ecf1f451c668" />
+
