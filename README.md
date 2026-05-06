@@ -107,3 +107,21 @@ Protected APIs Accessible
 - Server validates credentials  
 - JWT token is generated  
 - Token is used to access secured APIs
+
+---
+
+## 📌 Important API Endpoints
+
+| Method | Endpoint | Description |
+|---|---|---|
+| POST | `/auth/signup` | Register a new user |
+| POST | `/auth/login` | User login |
+| POST | `/auth/refresh` | Refresh JWT token |
+| GET | `/users/profile` | Get user profile |
+| PATCH | `/users/profile` | Update profile |
+| GET | `/hotels/search` | Search hotels |
+| POST | `/bookings/init` | Initialize booking |
+| POST | `/bookings/{bookingId}/cancel` | Cancel booking |
+| GET | `/bookings/{bookingId}/status` | Check booking status |
+| POST | `/admin/hotels` | Create hotel |
+| GET | `/admin/hotels` | Get admin hotels |
