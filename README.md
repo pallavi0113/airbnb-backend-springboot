@@ -1,29 +1,30 @@
-# Airbnb Backend System
+# Airbnb Backend Clone
 
-A backend system inspired by Airbnb built using Spring Boot. It provides APIs for user authentication, property listings, booking management, and payments.
+A scalable backend application inspired by Airbnb, built using Spring Boot.
 
-## Features
-- JWT-based authentication
-- Role-based authorization (Admin/User)
-- Property listing management
-- Booking system
-- Stripe payment integration
+---
 
-## Tech Stack
+## 🚀 Tech Stack
+
 - Java
 - Spring Boot
+- Spring Security
+- JWT Authentication
+- Hibernate
+- Spring Data JPA
 - MySQL
-- JPA / Hibernate
-- JWT
-- Stripe API
+- Maven
+- Swagger UI
 
-## API Modules
-- Auth (Login/Register)
-- Property
-- Booking
-- Payment
+---
 
-## How to Run
-1. Clone the repository
-2. Configure MySQL in `application.properties`
-3. Run the Spring Boot application
+## ✨ Features
+
+- User Registration & Login
+- JWT Authentication
+- Role-based Authorization
+- Property Listing APIs
+- Booking APIs
+- Secure REST APIs
+- Exception Handling
+- Validation
