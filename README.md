@@ -125,3 +125,15 @@ Protected APIs Accessible
 | GET | `/bookings/{bookingId}/status` | Check booking status |
 | POST | `/admin/hotels` | Create hotel |
 | GET | `/admin/hotels` | Get admin hotels |
+
+---
+
+## 🚀 Future Improvements
+
+- Docker containerization  
+- AWS deployment  
+- Redis caching  
+- Payment gateway integration  
+- Email notifications  
+- Microservices architecture  
+- CI/CD pipeline integration
