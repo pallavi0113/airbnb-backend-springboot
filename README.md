@@ -58,3 +58,33 @@ A scalable backend application inspired by Airbnb, built using Spring Boot.
 ## 📷 Swagger API Documentation
 <img width="1763" height="4567" alt="Swagger-api" src="https://github.com/user-attachments/assets/9341568c-c8e7-486c-a867-ecf1f451c668" />
 
+---
+
+## 📂 Project Structure
+
+```text
+src/main/java/com.pallavi.project.AirBnb
+ ┣ advice
+ ┣ config
+ ┣ controller
+ ┣ dto
+ ┣ entity
+ ┣ exception
+ ┣ repository
+ ┣ security
+ ┣ service
+ ┣ strategy
+ ┣ util
+```
+
+- **Advice** → Global exception & response handling  
+- **Config** → Application configurations  
+- **Controller** → Handles REST API requests  
+- **DTO** → Request & Response objects  
+- **Entity** → Database entities  
+- **Exception** → Custom exceptions  
+- **Repository** → Database interaction layer  
+- **Security** → JWT & Spring Security configuration  
+- **Service** → Business logic layer  
+- **Strategy** → Strategy pattern implementations  
+- **Util** → Utility/helper classes
