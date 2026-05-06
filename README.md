@@ -28,6 +28,8 @@ A scalable backend application inspired by Airbnb, built using Spring Boot.
 - Secure REST APIs
 - Exception Handling
 - Validation
+- Stripe Payment Integration
+- DTO Mapping using ModelMapper
 
 
 ---
@@ -133,7 +135,5 @@ Protected APIs Accessible
 - Docker containerization  
 - AWS deployment  
 - Redis caching  
-- Payment gateway integration  
-- Email notifications  
-- Microservices architecture  
-- CI/CD pipeline integration
+- CI/CD pipeline integration  
+- Microservices architecture
