@@ -28,3 +28,27 @@ A scalable backend application inspired by Airbnb, built using Spring Boot.
 - Secure REST APIs
 - Exception Handling
 - Validation
+
+
+---
+
+## 🧠 Architecture
+
+- Controller Layer
+- Service Layer
+- Repository Layer
+- DTO Pattern
+- Entity Relationship Mapping
+
+---
+
+## 📚 What I Learned
+
+- JWT Authentication
+- Spring Security Configuration
+- REST API Development
+- Layered Architecture
+- Hibernate ORM
+- Exception Handling
+- DTO Mapping
+- Database Relationships
